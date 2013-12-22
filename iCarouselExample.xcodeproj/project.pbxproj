@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01308D9313491C3500453707 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9213491C3500453707 /* UIKit.framework */; };
+		01308D9513491C3500453707 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9413491C3500453707 /* Foundation.framework */; };
+		01308D9713491C3500453707 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9613491C3500453707 /* CoreGraphics.framework */; };
+		01308DC013491F7200453707 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308DBF13491F7200453707 /* QuartzCore.framework */; };
+		0148358813A36C2000E687AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0148358313A36C2000E687AC /* main.m */; };
+		0148359313A36C3700E687AC /* iCarouselExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0148358B13A36C3700E687AC /* iCarouselExampleViewController.m */; };
+		0148359413A36C3700E687AC /* iCarouselExampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0148358D13A36C3700E687AC /* iCarouselExampleAppDelegate.m */; };
+		0148359513A36C3700E687AC /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0148358F13A36C3700E687AC /* MainWindow.xib */; };
+		0148359613A36C3700E687AC /* iCarouselExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0148359113A36C3700E687AC /* iCarouselExampleViewController.xib */; };
+		018AE98A179D7EBA00FB7311 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 018AE989179D7EBA00FB7311 /* Default-568h@2x.png */; };
+		5C3A4B171865039E007E23F2 /* sourcedisplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A4B161865039E007E23F2 /* sourcedisplay.png */; };
+		5C4148591865F5A600791728 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9213491C3500453707 /* UIKit.framework */; };
+		5C41485A1865F5A600791728 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9413491C3500453707 /* Foundation.framework */; };
+		5C41485B1865F5A600791728 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01308D9613491C3500453707 /* CoreGraphics.framework */; };
+		5C4148611865F5A600791728 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C41485F1865F5A600791728 /* InfoPlist.strings */; };
+		5C4148631865F5A600791728 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4148621865F5A600791728 /* main.m */; };
+		5C4148671865F5A600791728 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4148661865F5A600791728 /* AppDelegate.m */; };
+		5C4148691865F5A600791728 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4148681865F5A600791728 /* Default.png */; };
+		5C41486B1865F5A600791728 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C41486A1865F5A600791728 /* Default@2x.png */; };
+		5C41486D1865F5A600791728 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C41486C1865F5A600791728 /* Default-568h@2x.png */; };
+		5C4148701865F5A600791728 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C41486E1865F5A600791728 /* MainStoryboard.storyboard */; };
+		5C4148731865F5A600791728 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4148721865F5A600791728 /* ViewController.m */; };
+		5C4234BE18639285003C60CC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4234BD18639285003C60CC /* Constants.m */; };
+		5CADA8E218624EAF0034D77A /* keypaddisplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8E118624EAF0034D77A /* keypaddisplay.png */; };
+		5CADA8E618625C290034D77A /* keypaddisplay2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8E518625C290034D77A /* keypaddisplay2.png */; };
+		5CADA8E818625EA80034D77A /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8E718625EA80034D77A /* settings.json */; };
+		5CADA8EF18626DD50034D77A /* zonefile1.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8E918626DD50034D77A /* zonefile1.zf */; };
+		5CADA8F018626DD50034D77A /* zonefile2.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8EA18626DD50034D77A /* zonefile2.zf */; };
+		5CADA8F118626DD50034D77A /* zonefile3.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8EB18626DD50034D77A /* zonefile3.zf */; };
+		5CADA8F218626DD50034D77A /* zonefile4.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8EC18626DD50034D77A /* zonefile4.zf */; };
+		5CADA8F318626DD50034D77A /* zonefile5.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8ED18626DD50034D77A /* zonefile5.zf */; };
+		5CADA8F418626DD50034D77A /* zonefile6.zf in Resources */ = {isa = PBXBuildFile; fileRef = 5CADA8EE18626DD50034D77A /* zonefile6.zf */; };
+		B2E5E6C1146145C900EADB7A /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E5E6C0146145C900EADB7A /* iCarousel.m */; };
+		B2E5E72D1461544B00EADB7A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E5E72B1461544B00EADB7A /* background.png */; };
+		B2E5E72E1461544B00EADB7A /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E5E72C1461544B00EADB7A /* page.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01308D9213491C3500453707 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		01308D9413491C3500453707 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		01308D9613491C3500453707 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		01308DBF13491F7200453707 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0148358313A36C2000E687AC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		0148358413A36C2000E687AC /* keypad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "keypad-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0148358513A36C2000E687AC /* keypad-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "keypad-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		0148358713A36C2000E687AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		0148358B13A36C3700E687AC /* iCarouselExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarouselExampleViewController.m; sourceTree = SOURCE_ROOT; };
+		0148358C13A36C3700E687AC /* iCarouselExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarouselExampleViewController.h; sourceTree = SOURCE_ROOT; };
+		0148358D13A36C3700E687AC /* iCarouselExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarouselExampleAppDelegate.m; sourceTree = SOURCE_ROOT; };
+		0148358E13A36C3700E687AC /* iCarouselExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarouselExampleAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		0148359013A36C3700E687AC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = SOURCE_ROOT; };
+		0148359213A36C3700E687AC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/iCarouselExampleViewController.xib; sourceTree = SOURCE_ROOT; };
+		018AE989179D7EBA00FB7311 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
+		018BBCB413A375AF005CA505 /* keypad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = keypad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C3A4B161865039E007E23F2 /* sourcedisplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sourcedisplay.png; sourceTree = SOURCE_ROOT; };
+		5C4148581865F5A600791728 /* keypad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = keypad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C41485E1865F5A600791728 /* keypad-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "keypad-Info.plist"; sourceTree = "<group>"; };
+		5C4148601865F5A600791728 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5C4148621865F5A600791728 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5C4148641865F5A600791728 /* keypad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "keypad-Prefix.pch"; sourceTree = "<group>"; };
+		5C4148651865F5A600791728 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5C4148661865F5A600791728 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5C4148681865F5A600791728 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		5C41486A1865F5A600791728 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		5C41486C1865F5A600791728 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5C41486F1865F5A600791728 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		5C4148711865F5A600791728 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5C4148721865F5A600791728 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5C4234BC18639285003C60CC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = SOURCE_ROOT; };
+		5C4234BD18639285003C60CC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = SOURCE_ROOT; };
+		5CADA8E118624EAF0034D77A /* keypaddisplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keypaddisplay.png; sourceTree = SOURCE_ROOT; };
+		5CADA8E518625C290034D77A /* keypaddisplay2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keypaddisplay2.png; sourceTree = SOURCE_ROOT; };
+		5CADA8E718625EA80034D77A /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = settings.json; sourceTree = SOURCE_ROOT; };
+		5CADA8E918626DD50034D77A /* zonefile1.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile1.zf; sourceTree = SOURCE_ROOT; };
+		5CADA8EA18626DD50034D77A /* zonefile2.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile2.zf; sourceTree = SOURCE_ROOT; };
+		5CADA8EB18626DD50034D77A /* zonefile3.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile3.zf; sourceTree = SOURCE_ROOT; };
+		5CADA8EC18626DD50034D77A /* zonefile4.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile4.zf; sourceTree = SOURCE_ROOT; };
+		5CADA8ED18626DD50034D77A /* zonefile5.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile5.zf; sourceTree = SOURCE_ROOT; };
+		5CADA8EE18626DD50034D77A /* zonefile6.zf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zonefile6.zf; sourceTree = SOURCE_ROOT; };
+		B2E5E6BF146145C900EADB7A /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		B2E5E6C0146145C900EADB7A /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		B2E5E72B1461544B00EADB7A /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = ../Resources/background.png; sourceTree = SOURCE_ROOT; };
+		B2E5E72C1461544B00EADB7A /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page.png; path = ../Resources/page.png; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01308D8B13491C3500453707 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01308DC013491F7200453707 /* QuartzCore.framework in Frameworks */,
+				01308D9313491C3500453707 /* UIKit.framework in Frameworks */,
+				01308D9513491C3500453707 /* Foundation.framework in Frameworks */,
+				01308D9713491C3500453707 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C4148551865F5A600791728 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C4148591865F5A600791728 /* UIKit.framework in Frameworks */,
+				5C41485A1865F5A600791728 /* Foundation.framework in Frameworks */,
+				5C41485B1865F5A600791728 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01308D8313491C3500453707 = {
+			isa = PBXGroup;
+			children = (
+				B2E5E6BE146145C900EADB7A /* iCarousel */,
+				01308D9813491C3500453707 /* iCarouselExample */,
+				5C41485C1865F5A600791728 /* keypad */,
+				01308D9113491C3500453707 /* Frameworks */,
+				01308D8F13491C3500453707 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		01308D8F13491C3500453707 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				018BBCB413A375AF005CA505 /* keypad.app */,
+				5C4148581865F5A600791728 /* keypad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01308D9113491C3500453707 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01308DBF13491F7200453707 /* QuartzCore.framework */,
+				01308D9213491C3500453707 /* UIKit.framework */,
+				01308D9413491C3500453707 /* Foundation.framework */,
+				01308D9613491C3500453707 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		01308D9813491C3500453707 /* iCarouselExample */ = {
+			isa = PBXGroup;
+			children = (
+				0148358B13A36C3700E687AC /* iCarouselExampleViewController.m */,
+				0148358C13A36C3700E687AC /* iCarouselExampleViewController.h */,
+				0148358D13A36C3700E687AC /* iCarouselExampleAppDelegate.m */,
+				0148358E13A36C3700E687AC /* iCarouselExampleAppDelegate.h */,
+				0148358F13A36C3700E687AC /* MainWindow.xib */,
+				0148359113A36C3700E687AC /* iCarouselExampleViewController.xib */,
+				B2E5E72A1461543E00EADB7A /* Resources */,
+				01308D9913491C3500453707 /* Supporting Files */,
+				5C4234BC18639285003C60CC /* Constants.h */,
+				5C4234BD18639285003C60CC /* Constants.m */,
+			);
+			path = iCarouselExample;
+			sourceTree = "<group>";
+		};
+		01308D9913491C3500453707 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				018AE989179D7EBA00FB7311 /* Default-568h@2x.png */,
+				0148358313A36C2000E687AC /* main.m */,
+				0148358413A36C2000E687AC /* keypad-Info.plist */,
+				0148358513A36C2000E687AC /* keypad-Prefix.pch */,
+				0148358613A36C2000E687AC /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5C41485C1865F5A600791728 /* keypad */ = {
+			isa = PBXGroup;
+			children = (
+				5C4148651865F5A600791728 /* AppDelegate.h */,
+				5C4148661865F5A600791728 /* AppDelegate.m */,
+				5C41486E1865F5A600791728 /* MainStoryboard.storyboard */,
+				5C4148711865F5A600791728 /* ViewController.h */,
+				5C4148721865F5A600791728 /* ViewController.m */,
+				5C41485D1865F5A600791728 /* Supporting Files */,
+			);
+			path = keypad;
+			sourceTree = "<group>";
+		};
+		5C41485D1865F5A600791728 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5C41485E1865F5A600791728 /* keypad-Info.plist */,
+				5C41485F1865F5A600791728 /* InfoPlist.strings */,
+				5C4148621865F5A600791728 /* main.m */,
+				5C4148641865F5A600791728 /* keypad-Prefix.pch */,
+				5C4148681865F5A600791728 /* Default.png */,
+				5C41486A1865F5A600791728 /* Default@2x.png */,
+				5C41486C1865F5A600791728 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2E5E6BE146145C900EADB7A /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				B2E5E6BF146145C900EADB7A /* iCarousel.h */,
+				B2E5E6C0146145C900EADB7A /* iCarousel.m */,
+			);
+			name = iCarousel;
+			path = ../../iCarousel;
+			sourceTree = "<group>";
+		};
+		B2E5E72A1461543E00EADB7A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5CADA8E918626DD50034D77A /* zonefile1.zf */,
+				5CADA8EA18626DD50034D77A /* zonefile2.zf */,
+				5CADA8EB18626DD50034D77A /* zonefile3.zf */,
+				5CADA8EC18626DD50034D77A /* zonefile4.zf */,
+				5C3A4B161865039E007E23F2 /* sourcedisplay.png */,
+				5CADA8ED18626DD50034D77A /* zonefile5.zf */,
+				5CADA8EE18626DD50034D77A /* zonefile6.zf */,
+				5CADA8E718625EA80034D77A /* settings.json */,
+				B2E5E72B1461544B00EADB7A /* background.png */,
+				5CADA8E518625C290034D77A /* keypaddisplay2.png */,
+				5CADA8E118624EAF0034D77A /* keypaddisplay.png */,
+				B2E5E72C1461544B00EADB7A /* page.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		01308D8D13491C3500453707 /* iCarouselExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01308DAF13491C3500453707 /* Build configuration list for PBXNativeTarget "iCarouselExample" */;
+			buildPhases = (
+				01308D8A13491C3500453707 /* Sources */,
+				01308D8B13491C3500453707 /* Frameworks */,
+				01308D8C13491C3500453707 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iCarouselExample;
+			productName = iCarouselExample;
+			productReference = 018BBCB413A375AF005CA505 /* keypad.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C4148571865F5A600791728 /* keypad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C4148741865F5A600791728 /* Build configuration list for PBXNativeTarget "keypad" */;
+			buildPhases = (
+				5C4148541865F5A600791728 /* Sources */,
+				5C4148551865F5A600791728 /* Frameworks */,
+				5C4148561865F5A600791728 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = keypad;
+			productName = keypad;
+			productReference = 5C4148581865F5A600791728 /* keypad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01308D8513491C3500453707 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 01308D8813491C3500453707 /* Build configuration list for PBXProject "iCarouselExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 01308D8313491C3500453707;
+			productRefGroup = 01308D8F13491C3500453707 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01308D8D13491C3500453707 /* iCarouselExample */,
+				5C4148571865F5A600791728 /* keypad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01308D8C13491C3500453707 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0148359513A36C3700E687AC /* MainWindow.xib in Resources */,
+				0148359613A36C3700E687AC /* iCarouselExampleViewController.xib in Resources */,
+				B2E5E72D1461544B00EADB7A /* background.png in Resources */,
+				B2E5E72E1461544B00EADB7A /* page.png in Resources */,
+				018AE98A179D7EBA00FB7311 /* Default-568h@2x.png in Resources */,
+				5CADA8E218624EAF0034D77A /* keypaddisplay.png in Resources */,
+				5CADA8E618625C290034D77A /* keypaddisplay2.png in Resources */,
+				5CADA8E818625EA80034D77A /* settings.json in Resources */,
+				5CADA8EF18626DD50034D77A /* zonefile1.zf in Resources */,
+				5CADA8F018626DD50034D77A /* zonefile2.zf in Resources */,
+				5CADA8F118626DD50034D77A /* zonefile3.zf in Resources */,
+				5CADA8F218626DD50034D77A /* zonefile4.zf in Resources */,
+				5CADA8F318626DD50034D77A /* zonefile5.zf in Resources */,
+				5CADA8F418626DD50034D77A /* zonefile6.zf in Resources */,
+				5C3A4B171865039E007E23F2 /* sourcedisplay.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C4148561865F5A600791728 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C4148611865F5A600791728 /* InfoPlist.strings in Resources */,
+				5C4148691865F5A600791728 /* Default.png in Resources */,
+				5C41486B1865F5A600791728 /* Default@2x.png in Resources */,
+				5C41486D1865F5A600791728 /* Default-568h@2x.png in Resources */,
+				5C4148701865F5A600791728 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01308D8A13491C3500453707 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0148358813A36C2000E687AC /* main.m in Sources */,
+				0148359313A36C3700E687AC /* iCarouselExampleViewController.m in Sources */,
+				0148359413A36C3700E687AC /* iCarouselExampleAppDelegate.m in Sources */,
+				B2E5E6C1146145C900EADB7A /* iCarousel.m in Sources */,
+				5C4234BE18639285003C60CC /* Constants.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C4148541865F5A600791728 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C4148631865F5A600791728 /* main.m in Sources */,
+				5C4148671865F5A600791728 /* AppDelegate.m in Sources */,
+				5C4148731865F5A600791728 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0148358613A36C2000E687AC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0148358713A36C2000E687AC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0148358F13A36C3700E687AC /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0148359013A36C3700E687AC /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		0148359113A36C3700E687AC /* iCarouselExampleViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0148359213A36C3700E687AC /* en */,
+			);
+			name = iCarouselExampleViewController.xib;
+			sourceTree = "<group>";
+		};
+		5C41485F1865F5A600791728 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C4148601865F5A600791728 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5C41486E1865F5A600791728 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C41486F1865F5A600791728 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		01308DAD13491C3500453707 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A5D7E4-5D01-4A78-B6C4-78CFCA2D5166";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		01308DAE13491C3500453707 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A5D7E4-5D01-4A78-B6C4-78CFCA2D5166";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		01308DB013491C3500453707 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "keypad-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "keypad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = keypad;
+				PROVISIONING_PROFILE = "01DBAFFE-E3A8-4003-8B26-DD259A8712E6";
+				"PROVISIONING_PROFILE[sdk=*]" = "A9A5D7E4-5D01-4A78-B6C4-78CFCA2D5166";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		01308DB113491C3500453707 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "keypad-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "keypad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = keypad;
+				PROVISIONING_PROFILE = "01DBAFFE-E3A8-4003-8B26-DD259A8712E6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5C4148751865F5A600791728 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "keypad/keypad-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "keypad/keypad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A9A5D7E4-5D01-4A78-B6C4-78CFCA2D5166";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "48C2C2AC-4CCE-4E8B-AAFD-FB89794871A9";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5C4148761865F5A600791728 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dave Carroll (8RG8V4N2BC)";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "keypad/keypad-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "keypad/keypad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A9A5D7E4-5D01-4A78-B6C4-78CFCA2D5166";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "48C2C2AC-4CCE-4E8B-AAFD-FB89794871A9";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01308D8813491C3500453707 /* Build configuration list for PBXProject "iCarouselExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01308DAD13491C3500453707 /* Debug */,
+				01308DAE13491C3500453707 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01308DAF13491C3500453707 /* Build configuration list for PBXNativeTarget "iCarouselExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01308DB013491C3500453707 /* Debug */,
+				01308DB113491C3500453707 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C4148741865F5A600791728 /* Build configuration list for PBXNativeTarget "keypad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C4148751865F5A600791728 /* Debug */,
+				5C4148761865F5A600791728 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01308D8513491C3500453707 /* Project object */;
+}

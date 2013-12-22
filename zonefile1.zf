@@ -1,0 +1,15 @@
+{
+    "zoneAddress": 1,
+    "command": 5,
+    "mediaInput": 1,
+    "volume": 10,
+    "balance": 0,
+    "treble": 0,
+    "bass": 0,
+    "partyMode": "0",
+    "partyModeInput": "000",
+    "power": "1",
+    "mute": "0",
+    "mode": "0",
+    "power2": "0"
+}

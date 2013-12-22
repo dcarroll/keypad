@@ -1,0 +1,20 @@
+{
+    "settings": {
+        "inputs": {
+            "1":"lVizio",
+            "2":"Airport",
+            "3":"Source 3",
+            "4":"Source 4",
+            "5":"Source 5",
+            "6":"Source 6"
+        },
+        "zones": {
+            "1":"Living Room",
+            "2":"Deck",
+            "3":"Zone 3",
+            "4":"Zone 4",
+            "5":"Zone 5",
+            "6":"Zone 6"
+        }
+    }
+}
