@@ -7,16 +7,19 @@
 //
 
 #import "iCarouselExampleViewController.h"
-
+#import "SocketIO.h"
+#import "SocketIOPacket.h"
+#import "Zone.h"
 
 @interface iCarouselExampleViewController () <UIActionSheetDelegate>
 
 @property (nonatomic, assign) BOOL wrap;
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, assign) NSInteger *zoneAddress;
-@property (nonatomic, strong) NSMutableArray *zonedata;
+@property (nonatomic, strong) NSMutableDictionary *zonedata;
 @property (nonatomic, strong) UILabel *vlabel;
 @property (nonatomic, strong) NSMutableArray *inputitems;
+@property (nonatomic, strong) SocketIO *socket;
 
 @end
 
@@ -31,46 +34,22 @@
 @synthesize items;
 @synthesize inputitems;
 @synthesize zoneAddress;
-@synthesize power;
+@synthesize powerButton;
+@synthesize muteButton;
 @synthesize input;
-@synthesize mute;
-@synthesize volume;
 @synthesize zonedata;
 @synthesize vlabel;
+@synthesize socket;
 
 - (void)setUp
 {
-    // On line setup
-    [self readSettingsFile:@"settings.json" usingAPI:YES];
-    // Local setup
-    //[self readSettingsFile:@"settings.json" usingAPI:NO];
-    zoneAddress = 1;
+    socket = [[SocketIO alloc] initWithDelegate:self];
+    [self connectSocket];
 }
 
-- (void) readSettingsFile:(NSString *)name usingAPI:(BOOL)useAPI {
-    if (useAPI == YES) {
-        NSString *restendpoint = [NSString stringWithFormat:@"%@/settings", BaseAPIUrl];
-        [self sendSyncRestCallGet:restendpoint];
-    } else {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settings" ofType:@"json"];
-        NSData *data = [NSData dataWithContentsOfFile:filePath];
-        NSMutableDictionary *json1 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSMutableDictionary* json = (NSMutableDictionary*) CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault, (CFPropertyListRef) [json1 objectForKey:@"settings"], kCFPropertyListMutableContainers));
-        [self processSettings:json];
-    }
-}
-
-- (NSMutableDictionary *) readZoneDataFile:(NSString *)file withIndex:(int)ind usingAPI:(BOOL)useAPI {
-    if (useAPI == YES) {
-    
-    } else {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:file ofType:@"zf"];
-        NSData *data = [NSData dataWithContentsOfFile:filePath];
-        NSMutableDictionary *json1 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSMutableDictionary* json = (NSMutableDictionary*) CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault, (CFPropertyListRef) json1, kCFPropertyListMutableContainers));
-
-        return json;
-    }
+- (void) connectSocket {
+    //[socket connectToHost:@"10.0.0.52" onPort:3000];
+    [socket connectToHost:@"10.0.0.30" onPort:3000];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -99,7 +78,6 @@
     carousel.dataSource = nil;
     carousel2.delegate = nil;
     carousel2.dataSource = nil;
-    
 }
 
 #pragma mark -
@@ -112,7 +90,15 @@
     //configure carousel
     carousel.type = iCarouselTypeLinear;
     carousel2.type = iCarouselTypeLinear;
-    navItem.title = @"Linear";
+    navItem.title = @"Carroll Keypad";
+    // And only one sound plays at a time!
+	NSString *clicksoundPath = [[NSBundle mainBundle] pathForResource:@"button-50" ofType:@"mp3"];
+	NSURL *clicksoundUrl = [NSURL fileURLWithPath:clicksoundPath];
+	NSString *selectsoundPath = [[NSBundle mainBundle] pathForResource:@"beep-21" ofType:@"mp3"];
+	NSURL *selectsoundUrl = [NSURL fileURLWithPath:selectsoundPath];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)clicksoundUrl, &_clickSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)selectsoundUrl, &_selectSound);
+
 }
 
 - (void)viewDidUnload
@@ -129,26 +115,106 @@
     return YES;
 }
 
-- (void)processSettings:(NSMutableDictionary *)settingsData {
+- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error {
+    NSLog(@"Disconnected...");
+    socketIsConnected = NO;
+}
+
+- (void) socketIODidConnect:(SocketIO *)asocket
+{
+    NSLog(@"socket.io connected.");
+    socketIsConnected = YES;
+    if (replay == YES) {
+        [self sendSocketEvent:[replayData objectForKey:@"cmd"] withData:[replayData objectForKey:@"data"]];
+        replay = false;
+        replayData = nil;
+    }
+}
+
+- (void) socketIO:(SocketIO *)asocket didReceiveEvent:(SocketIOPacket *)packet
+{
+    NSLog(@"didReceiveEvent() %@", [packet data] );
+    NSDictionary *jdata = [packet dataAsJSON];
+    NSArray *args = [jdata objectForKey:@"args"];
+    NSDictionary *arg = [args objectAtIndex:0];
+    
+    NSString *name = (NSString *)[jdata objectForKey:@"name"];
+    
+    if (![name isEqualToString:@"connected"]) {
+        if ([name isEqualToString:@"zoneupdate"]) {
+            NSNumber *resv = [arg objectForKey:@"reserved"];
+            if ([resv integerValue] == 0) {
+                NSLog(@"Getting zone address from socket data");
+                NSNumber *zind = [arg objectForKey:@"zoneAddress"];
+                NSString *zkey = [NSString stringWithFormat:@"zone%@", zind];
+            
+                Zone* z = [self.zonedata objectForKey:zkey];
+            
+                NSLog(@"Updating zone data.");
+                if (z == nil) {
+                    z = [[Zone alloc] initWithData:arg];
+                    if ([zind integerValue] != 0) {
+                        [self.zonedata setObject:z forKey:zkey];
+                    } else {
+                        return;
+                    }
+                } else {
+                    [z updateWithData:arg];
+                }
+                if (z.power == YES) {
+                    [powerButton setImage:[UIImage imageNamed:@"powerOn.png"] forState:UIControlStateNormal];
+                } else {
+                    [powerButton setImage:[UIImage imageNamed:@"powerOff.png"] forState:UIControlStateNormal];
+                }
+                if (z.mute == YES) {
+                    [muteButton setImage:[UIImage imageNamed:@"muteOn.png"] forState:UIControlStateNormal];
+                } else {
+                    [muteButton setImage:[UIImage imageNamed:@"muteOff.png"] forState:UIControlStateNormal];
+                }
+
+                currentStepValue = [z.volume doubleValue];
+                UILabel *vLabel = (UILabel *)[[carousel currentItemView] viewWithTag:2];
+                vLabel.text = [NSString stringWithFormat:@"%f", currentStepValue];
+                [carousel2 setCurrentItemIndex:[z.mediaInput integerValue] - 1];
+                [carousel reloadData];
+            }
+        }
+        if ([name isEqualToString:@"settings"]) {
+            [self processSettings:arg];
+        }
+    } else {
+        [self sendSocketEvent:@"sendsettings" withData:nil];
+        zoneAddress = 1;
+
+    }
+}
+
+- (void)sendSocketEvent:(NSString *)cmd withData:(NSMutableDictionary *)args {
+    if (socketIsConnected) {
+        [socket sendEvent:cmd withData:args];
+    } else {
+        replay = true;
+        replayData = [NSDictionary dictionaryWithObjectsAndKeys:cmd, @"cmd", args, @"data", nil];
+        [self connectSocket];
+    }
+}
+
+- (void)processSettings:(NSDictionary *)settingsData {
     NSMutableDictionary* zones = [settingsData valueForKey:@"zones"];
     NSMutableDictionary* inputs = [settingsData valueForKey:@"inputs"];
     
     //set up data
     self.items = [NSMutableArray array];
-    self.zonedata = [NSMutableArray array];
+    self.zonedata = [[NSMutableDictionary alloc] initWithCapacity:6];
     self.inputitems = [NSMutableArray array];
     
     NSArray* sortedKeys = [zones keysSortedByValueUsingSelector:@selector(caseInsensitiveCompare:)];
     NSArray* sortedInputKeys = [inputs keysSortedByValueUsingSelector:@selector(caseInsensitiveCompare:)];
     
-    //NSLog(@"zone count: %d", [zones count]);
+    NSLog(@"zone count: %d", [zones count]);
     
     for (int i=0;i<[sortedKeys count];i++)
     {
-        NSString *zdFile = [NSString stringWithFormat:@"zonefile%d", i+1];
-        NSMutableDictionary *zdata = [self readZoneDataFile:zdFile withIndex:i usingAPI:NO];
-        [zonedata addObject:zdata];
-
         NSString* key = [sortedKeys objectAtIndex:i];
         NSString *z = [zones objectForKey:key];
         //NSLog(@"Adding zone %@", z);
@@ -166,14 +232,19 @@
     NSLog(@"Zones: %d", [items count]);
     [carousel reloadData];
     [carousel2 reloadData];
+    [self queryZone];
 }
 
+#pragma mark -
+#pragma mark REST version support
+/*
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
     //NSLog(@"Received response");
     
     //[self.apiReturnXMLData setLength:0];
 }
-
+*/
+/*
 - (void)connection:(NSURLConnection*)connection didReceiveData:(NSData*)data {
     NSURLRequest *req = [connection originalRequest];
     NSURL *url = [req URL];
@@ -188,6 +259,8 @@
     }
     //NSLog(@"Data returned: %@", [json objectForKey:@"status"]);
 }
+*/
+/*
 - (void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error {
     NSLog(@"URL Connection Failed!");
     currentConnection = nil;
@@ -195,6 +268,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
  currentConnection = nil;
 }
+*/
 
 /*- (void)receivedSettingsData:(NSURLConnection *)restConnection didReceiveData:(NSData *)data {
     NSDictionary *json1 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -203,7 +277,7 @@
     [self processSettings:json];
     zoneAddress = 1;
 }*/
-
+/*
 - (void)sendSyncRestCallGet:(NSString *)apiUrl {
     NSURL *restUrl = [NSURL URLWithString:apiUrl];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:restUrl];
@@ -220,9 +294,8 @@
     
     [self processSettings:json];
     zoneAddress = 1;
-    
-}
-
+}*/
+/*
 - (void)sendRestCallGet:(NSString *)apiUrl {
 
     NSURL *restUrl = [NSURL URLWithString:apiUrl];
@@ -236,9 +309,9 @@
         currentConnection = nil;
     }
     currentConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self];
-}
+}*/
 
-- (void)sendRestCallPost:(NSString *)apiUrl withData:(NSData *)postdata {
+/*- (void)sendRestCallPost:(NSString *)apiUrl withData:(NSData *)postdata {
     
     NSURL *restUrl = [NSURL URLWithString:apiUrl];
     
@@ -257,60 +330,79 @@
     
     currentConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self];
  
-}
+}*/
 
-- (void)changeInput:(NSInteger)newInput {
-    NSString *restCallString = [NSString stringWithFormat:@"%@/zone/%d/changeinput", BaseAPIUrl, (int) zoneAddress];
-    NSString *inputdata = [NSString stringWithFormat:@"&input=%d", newInput];
-    
-    NSData *pData = [inputdata dataUsingEncoding:NSASCIIStringEncoding];
-
-    [self sendRestCallPost:restCallString withData:pData];
+#pragma mark -
+#pragma mark keypad operations
+- (void)changeInput:(NSString *)newInput {
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", [carousel currentItemIndex] + 1];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:newInput forKey:@"cmd"];
+    NSLog(@"Sending event over socket from change input");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
 }
 
 - (IBAction)togglePower {
-    NSString *restCallString;
-    if (power.on) {
-        restCallString = [NSString stringWithFormat:@"%@/zone/%d/powerOn", BaseAPIUrl, (int) zoneAddress];
+
+    NSString *command;
+    NSString *zoneId = [NSString stringWithFormat:@"zone%d", carousel.currentItemIndex + 1];
+    
+    Zone* theZone = [self.zonedata objectForKey:zoneId];
+    if (theZone.power == YES) {
+        command = @"poweroff";
     } else {
-        restCallString = [NSString stringWithFormat:@"%@/zone/%d/powerOff", BaseAPIUrl, (int) zoneAddress];
+        command = @"poweron";
     }
     
-    
-    UIAlertView *   alert;
- 
-    alert = [[UIAlertView alloc] initWithTitle:@"Current Zone" message:restCallString delegate:nil cancelButtonTitle:@"Go Away" otherButtonTitles:nil, nil];
-    
-        [alert show];
-    
-    [self sendRestCallPost:restCallString withData:nil];
-    
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", (int) zoneAddress];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:command forKey:@"cmd"];
+    NSLog(@"Sending event over socket from power");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
 }
 
 - (IBAction)toggleMute {
-    NSLog(@"Change the power for zone: %d", (int) zoneAddress);
-    NSString *restCallString;
+     NSString *command;
     
-    restCallString = [NSString stringWithFormat:@"%@/zone/%d/toggleMute", BaseAPIUrl, (int) zoneAddress];
+    command = @"togglemute";
     
-    [self sendRestCallPost:restCallString withData:nil];
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", (int) zoneAddress];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:command forKey:@"cmd"];
+    NSLog(@"Sending event over socket from toggle mute");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
 }
 
-- (IBAction)changeVolume {
-    NSLog(@"Change the volume for zone: %d to %.0f", (int) zoneAddress, [volume value]);
-    NSString *restCallString = [NSString stringWithFormat:@"%@/zone/%d/volumeChange", BaseAPIUrl, (int) zoneAddress];
-    NSString *vol = [NSString stringWithFormat:@"&volume=%.0f", [volume value]];
-    
-    NSData *pData = [vol dataUsingEncoding:NSASCIIStringEncoding];
-    
-    [self sendRestCallPost:restCallString withData:pData];
-    self.vlabel.text = [NSString stringWithFormat:@"%.0f", [volume value]];
-    //NSMutableDictionary *z = (NSMutableDictionary *)[self.zonedata objectAtIndex:[carousel currentItemIndex]];
-    
-    /*[z setValue:[NSNumber numberWithFloat:[volume value]] forKey:@"volume"];*/
-    
+- (void)queryZone {
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", (int) [carousel currentItemIndex] + 1];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:@"queryzone" forKey:@"cmd"];
+    NSLog(@"Sending event over socket from query");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
 }
 
+- (IBAction)volumeUp {
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", (int) zoneAddress];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:@"volumeup" forKey:@"cmd"];
+    NSLog(@"Sending event over socket from volumeup");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
+}
+
+- (IBAction)volumeDown {
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+    NSString *zaddr = [NSString stringWithFormat:@"%d", (int) zoneAddress];
+    [eventData setObject:zaddr forKey:@"zone"];
+    [eventData setObject:@"volumedown" forKey:@"cmd"];
+    NSLog(@"Sending event over socket from volumeDown");
+    [self sendSocketEvent:@"sendcommand" withData:eventData];
+
+}
 
 - (IBAction)switchCarouselType
 {
@@ -372,7 +464,7 @@
         [UIView commitAnimations];
         
         //update title
-        navItem.title = [actionSheet buttonTitleAtIndex:buttonIndex];
+        //navItem.title = [actionSheet buttonTitleAtIndex:buttonIndex];
     }
 }
 
@@ -392,13 +484,6 @@
 {
     UILabel *label = nil;
     UILabel *volLabel = nil;
-    NSString *whatCarousel 	= nil;
-    
-    if (acarousel.tag == 5) {
-        whatCarousel = @"zones";
-    } else {
-        whatCarousel = @"inputs";
-    }
     
     //create new view if no view is available for recycling
     if (view == nil)
@@ -418,7 +503,7 @@
         label.font = [label.font fontWithSize:20];
         label.tag = 1;
         [view addSubview:label];
-        NSLog(@"Add label to %@", whatCarousel);
+        //NSLog(@"Add label to %@", whatCarousel);
         
         if (acarousel.tag == 5) {
             volLabel = [[UILabel alloc] initWithFrame:view.bounds];
@@ -449,8 +534,13 @@
     //in the wrong place in the carousel
     if (acarousel.tag == 5) {
         label.text = [items objectAtIndex:index];
-        NSMutableDictionary *zdata = [self.zonedata objectAtIndex:index];
-        volLabel.text = [NSString stringWithFormat:@"%@", [zdata objectForKey:@"volume"]];
+        NSString *ind = [NSString stringWithFormat:@"%d", index + 1];
+        if ([[self.zonedata allValues] count] > 0) {
+            Zone *zdata = [self.zonedata objectForKey:[NSString stringWithFormat:@"zone%@", ind]];
+            volLabel.text = [NSString stringWithFormat:@"%d", [zdata.volume intValue]];
+        } else {
+            volLabel.text = @"0";
+        }
     } else {
         label.text = [inputitems objectAtIndex:index];
     }
@@ -473,7 +563,7 @@
         //don't do anything specific to the index within
         //this `if (view == nil) {...}` statement because the view will be
         //recycled and used with other index values later
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100.0f, 100.0f)];
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150.0f, 150.0f)];
         ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
         view.contentMode = UIViewContentModeCenter;
         
@@ -546,38 +636,41 @@
 #pragma mark iCarousel taps
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
     NSLog(@"Item changed.");
+     AudioServicesPlaySystemSound(_clickSound);
 }
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)acarousel {
+    NSLog(@"Did End Scrolling Animation");
     
     if (acarousel.tag == 5) {
-        NSMutableDictionary *zone = [self.zonedata objectAtIndex:[acarousel currentItemIndex]];
+        NSString *ind = [NSString stringWithFormat:@"zone%d", [acarousel currentItemIndex] + 1];
+        Zone *zone = [self.zonedata objectForKey:ind];
     
-        if ([[zone valueForKey:@"power"] isEqual: @"1"]) {
-            power.on = true;
+        if (zone.power == YES) {
+            [powerButton setImage:[UIImage imageNamed:@"powerOn.png"] forState:UIControlStateNormal];
         } else {
-            power.on = false;
+            [powerButton setImage:[UIImage imageNamed:@"powerOff.png"] forState:UIControlStateNormal];
         }
     
-        if ([[zone valueForKey:@"mute"] isEqual:@"1"]) {
-            mute.on = true;
+        if (zone.mute == YES) {
+            [muteButton setImage:[UIImage imageNamed:@"muteOn.png"] forState:UIControlStateNormal];
         } else {
-            mute.on = false;
+            [muteButton setImage:[UIImage imageNamed:@"muteOff.png"] forState:UIControlStateNormal];
         }
-    
-        float vol = [[zone valueForKey:@"volume"]floatValue];
-    
-        volume.value = vol;
+        
+        currentStepValue = [zone.volume floatValue];
+        
         UIView *cview = [acarousel itemViewAtIndex:[acarousel currentItemIndex]];
         vlabel = (UILabel *)[cview viewWithTag:2];
+        [carousel2 setCurrentItemIndex:[zone.mediaInput integerValue] - 1];
     } else {
-        NSLog(@"New input for zone %d is %@", (int) zoneAddress, [inputitems objectAtIndex:[acarousel currentItemIndex]]);
-        [self changeInput:[acarousel currentItemIndex] + 1];
-        NSMutableDictionary *zone = [zonedata objectAtIndex:[carousel currentItemIndex]];
-        NSString *ival = [NSString stringWithFormat:@"%d", [acarousel currentItemIndex]];
-        [zone setValue:ival forKey:@"mediaInput"];
+        //NSLog(@"New input for zone %d is %@", (int) zoneAddress, [inputitems objectAtIndex:[acarousel currentItemIndex]]);
+        //[self changeInput:[acarousel currentItemIndex] + 1];
+        //Zone *zone = [zonedata objectAtIndex:[carousel currentItemIndex]];
+        //zone.mediaInput = [NSNumber numberWithInt:[acarousel currentItemIndex] + 1];
     }
-    //NSLog(@"Done scrolling...%ld", (long)[acarousel currentItemIndex]);
+
+    NSLog(@"Done scrolling...%ld", (long)[acarousel currentItemIndex]);
     zoneAddress = [acarousel currentItemIndex] + 1;
 }
 
@@ -585,12 +678,21 @@
 {
     if (acarousel.tag == 5) {
         zoneAddress = index + 1;
-    
+
         NSNumber *item = (self.items)[index];
         NSLog(@"Tapped view number: %@", item);
+        NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
+        [eventData setObject:[NSNumber numberWithInt:index] forKey:@"zone"];
+        [self toggleWrap];
     } else {
         NSString *inputd = (self.inputitems)[index];
         NSLog(@"Tapped input : %@", inputd);
+        NSString *newInput = [NSString stringWithFormat:@"setinput%d", [acarousel currentItemIndex] + 1];
+        NSLog(@"New INput %@", newInput);
+        //AudioServicesPlaySystemSound(1003);
+        AudioServicesPlaySystemSound(_selectSound);
+        [self toggleWrap];
+        [self changeInput:newInput];
     }
 }
 
